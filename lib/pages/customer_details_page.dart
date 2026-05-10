@@ -13,6 +13,18 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
+      floatingActionButton: FloatingActionButton.extended(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(15),
+        ),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.border,
+        label: Row(
+          spacing: 5,
+          children: [Icon(Icons.add), Text('New Transaction')],
+        ),
+        onPressed: () {},
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -28,6 +40,8 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                 _buildTransactionHistory(context),
                 SizedBox(height: 20),
                 _buildTransactionOrderCard(),
+                SizedBox(height: 20),
+                _buildPaymentCard(),
               ],
             ),
           ),
@@ -41,6 +55,11 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
       backgroundColor: AppColors.background,
       elevation: 0,
       centerTitle: true,
+      // leading: IconButton(
+      //   onPressed: () => Navigator.of(context).pop(),
+      //   icon: const Icon(Icons.arrow_back),
+      //   color: AppColors.primary,
+      // ),
       title: Text(
         'Betfah Egg Sales',
         style: AppTextStyles.headline1.copyWith(
@@ -64,14 +83,12 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
   Widget _buildCustomerCard() {
     return Container(
       decoration: AppCardStyles.highlightCard,
-
       padding: EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'customer account'.toUpperCase(),
-
             style: AppTextStyles.headline4.copyWith(color: Colors.white70),
           ),
           SizedBox(height: 10),
@@ -124,66 +141,61 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
       ),
     );
   }
-}
 
-Widget _buildTransactionHistory(BuildContext context) {
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Transaction History', style: AppTextStyles.headline2),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.45,
-                child: Text(
-                  'Chronological history of orders and payments', //TODO fix word wrap
-                  style: AppTextStyles.headline4,
+  Widget _buildTransactionHistory(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Transaction History', style: AppTextStyles.headline2),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: Text(
+                    'chronological history of orders and payments',
+                    style: AppTextStyles.headline4,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            style: AppButtonStyles.secondaryButton,
-            child: Padding(
-              padding: EdgeInsets.symmetric(),
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: AppButtonStyles.secondaryButton,
               child: Row(
                 spacing: AppSpacing.sm,
-                children: [Icon(Icons.filter_list_outlined), Text('Filter')],
+                children: [Icon(Icons.tune_outlined), Text('Filter')],
               ),
             ),
-          ),
-        ],
-      ),
-    ],
-  );
-}
-
-Widget _buildTransactionOrderCard() {
-  return Column(
-    children: [
-      Container(
-        decoration: BoxDecoration(
-          color: AppColors.border,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppBorderRadius.large),
-            topRight: Radius.circular(AppBorderRadius.large),
-          ),
+          ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.xl),
+      ],
+    );
+  }
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                spacing: AppSpacing.md,
-                children: [
-                  SizedBox(
-                    child: Container(
+  Widget _buildTransactionOrderCard() {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.border,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppBorderRadius.large),
+              topRight: Radius.circular(AppBorderRadius.large),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  spacing: AppSpacing.md,
+                  children: [
+                    // CHANGE: Removed redundant outer SizedBox wrapper
+                    Container(
                       padding: EdgeInsets.all(AppSpacing.sm),
                       decoration: BoxDecoration(
                         color: Colors.grey,
@@ -195,26 +207,189 @@ Widget _buildTransactionOrderCard() {
                         color: AppColors.primary,
                       ),
                     ),
-                  ),
-                  Text(
-                    'Order #388DYES'.toUpperCase(),
-                    style: AppTextStyles.successText.copyWith(fontSize: 17),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text('Jan 12, 2026', style: AppTextStyles.headline2),
-              Text('10:45 AM', style: AppTextStyles.headline4),
-            ],
+                    Text(
+                      'Order #388DYES'.toUpperCase(),
+                      style: AppTextStyles.successText.copyWith(fontSize: 17),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text('Jan 12, 2026', style: AppTextStyles.headline2),
+                Text('10:45 AM', style: AppTextStyles.headline4),
+                SizedBox(height: 12),
+                // CHANGE: Added status + order total row for at-a-glance readability
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.xs,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryLightest,
+                        borderRadius: BorderRadius.circular(
+                          AppBorderRadius.circle,
+                        ),
+                      ),
+                      child: Row(
+                        spacing: AppSpacing.xs,
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            size: 14,
+                            color: AppColors.primary,
+                          ),
+                          Text(
+                            'Pending Payment',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text('₦60,000', style: AppTextStyles.amountSmall),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(AppBorderRadius.large),
+              bottomLeft: Radius.circular(AppBorderRadius.large),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GridView.count(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.5,
+                  mainAxisSpacing: AppSpacing.md,
+                  crossAxisSpacing: AppSpacing.md,
+                  children: [
+                    Container(
+                      decoration: AppCardStyles.formCard,
+                      padding: EdgeInsets.all(13),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Big'.toUpperCase(),
+                            style: AppTextStyles.headline2,
+                          ),
+                          SizedBox(height: 7),
+                          Row(
+                            children: [
+                              Text('20 ', style: AppTextStyles.amountLarge),
+                              Text('crates'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: AppCardStyles.formCard,
+                      padding: EdgeInsets.all(13),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Medium'.toUpperCase(),
+                            style: AppTextStyles.headline2,
+                          ),
+                          SizedBox(height: 7),
+                          Row(
+                            children: [
+                              Text('20 ', style: AppTextStyles.amountLarge),
+                              Text('crates'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: AppCardStyles.formCard,
+                      padding: EdgeInsets.all(13),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Small'.toUpperCase(),
+                            style: AppTextStyles.headline2,
+                          ),
+                          SizedBox(height: 7),
+                          Row(
+                            children: [
+                              Text('20 ', style: AppTextStyles.amountLarge),
+                              Text('crates'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: AppCardStyles.formCard,
+                      padding: EdgeInsets.all(13),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Cracked'.toUpperCase(),
+                            style: AppTextStyles.headline2,
+                          ),
+                          SizedBox(height: 7),
+                          Row(
+                            children: [
+                              Text('20 ', style: AppTextStyles.amountLarge),
+                              Text('crates'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
+                  child: Divider(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Order Value'),
+                    Text('₦60,000', style: AppTextStyles.amountMedium),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+Widget _buildPaymentCard() {
+  return Column(
+    children: [
+      // ── Header ──────────────────────────────────────────────────────────
       Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.border,
           borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(AppBorderRadius.large),
-            bottomLeft: Radius.circular(AppBorderRadius.large),
+            topLeft: Radius.circular(AppBorderRadius.large),
+            topRight: Radius.circular(AppBorderRadius.large),
           ),
         ),
         child: Padding(
@@ -222,103 +397,111 @@ Widget _buildTransactionOrderCard() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                childAspectRatio: 1.5,
-                mainAxisSpacing: AppSpacing.md,
-                crossAxisSpacing: AppSpacing.md,
+              Row(
+                spacing: AppSpacing.md,
                 children: [
                   Container(
-                    decoration: AppCardStyles.formCard,
-                    padding: EdgeInsets.all(13),
-                    child: Column(
+                    padding: EdgeInsets.all(AppSpacing.sm),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Icon(
+                      Icons.payments_outlined,
+                      size: 20,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  Text(
+                    'Payment'.toUpperCase(),
+                    style: AppTextStyles.successText.copyWith(fontSize: 17),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text('Jan 10, 2024', style: AppTextStyles.headline2),
+              Text('03:22 PM', style: AppTextStyles.headline4),
+            ],
+          ),
+        ),
+      ),
+
+      // ── Body ────────────────────────────────────────────────────────────
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(AppBorderRadius.large),
+            bottomRight: Radius.circular(AppBorderRadius.large),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.xl),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Left: method icon + method label + reference
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: AppSpacing.md,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(AppSpacing.sm),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryLightest,
+                        borderRadius: BorderRadius.circular(
+                          AppBorderRadius.medium,
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.account_balance_outlined,
+                        size: 20,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 4,
                       children: [
                         Text(
-                          'Big'.toUpperCase(),
-                          style: AppTextStyles.headline2,
+                          'METHOD: BANK\nTRANSFER',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.lightText,
+                            height: 1.5,
+                          ),
                         ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Text('20 ', style: AppTextStyles.amountLarge),
-                            Text('crates'),
-                          ],
+                        Text(
+                          'Ref: TRF_9930211X',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.lightText,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Container(
-                    decoration: AppCardStyles.formCard,
-                    padding: EdgeInsets.all(13),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'medium'.toUpperCase(),
-                          style: AppTextStyles.headline2,
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Text('20 ', style: AppTextStyles.amountLarge),
-                            Text('crates'),
-                          ],
-                        ),
-                      ],
+                  ],
+                ),
+              ),
+
+              // Right: amount paid label + value
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                spacing: 4,
+                children: [
+                  Text(
+                    'Amount Paid',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.lightText,
                     ),
                   ),
-                  Container(
-                    decoration: AppCardStyles.formCard,
-                    padding: EdgeInsets.all(13),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'small'.toUpperCase(),
-                          style: AppTextStyles.headline2,
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Text('20 ', style: AppTextStyles.amountLarge),
-                            Text('crates'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    decoration: AppCardStyles.formCard,
-                    padding: EdgeInsets.all(13),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'cracked'.toUpperCase(),
-                          style: AppTextStyles.headline2,
-                        ),
-                        SizedBox(height: 7),
-                        Row(
-                          children: [
-                            Text('20 ', style: AppTextStyles.amountLarge),
-                            Text('crates'),
-                          ],
-                        ),
-                      ],
+                  Text(
+                    '₦50,000',
+                    style: AppTextStyles.amountLarge.copyWith(
+                      color: AppColors.darkText,
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
-                child: Divider(),
-              ),
-              Row(children: [
-                Text('Total Order Value'),
-                Text('₦60,000')
-              ],)
             ],
           ),
         ),
