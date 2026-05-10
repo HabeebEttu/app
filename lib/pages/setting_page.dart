@@ -68,8 +68,12 @@ class SettingPage extends StatelessWidget {
                   padding: EdgeInsets.all(AppSpacing.md),
                   decoration: AppCardStyles.formCard,
                   child: Container(
-                    decoration: BoxDecoration(color: Colors.white,
-                    borderRadius: BorderRadius.circular(AppBorderRadius.medium)),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(
+                        AppBorderRadius.medium,
+                      ),
+                    ),
                     child: ListTile(
                       leading: Container(
                         decoration: AppCardStyles.formCard,
@@ -84,17 +88,17 @@ class SettingPage extends StatelessWidget {
                       trailing: Theme(
                         data: Theme.of(context).copyWith(
                           switchTheme: SwitchThemeData(
-                            trackOutlineColor: MaterialStateProperty.all(
+                            trackOutlineColor: WidgetStateProperty.all(
                               Colors.transparent,
                             ),
-                            thumbColor:MaterialStateProperty.all( Colors.white),
-                            trackColor: MaterialStateProperty.all(
+                            thumbColor: WidgetStateProperty.all(Colors.white),
+                            trackColor: WidgetStateProperty.all(
                               AppColors.border,
-                            )
+                            ),
                           ),
                         ),
                         child: Switch(value: false, onChanged: (value) {}),
-                      )
+                      ),
                     ),
                   ),
                 ),
@@ -118,6 +122,37 @@ class SettingPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(AppSpacing.md),
+                  decoration: AppCardStyles.formCard,
+                  child: Column(
+                    children: [
+                      _buildFormField(
+                        label: 'username',
+                        placeholder: 'Enter username',
+                        isNumerical: false,
+                      ),
+                      _buildFormField(
+                        label: 'password',
+                        placeholder: '······',
+                        isNumerical: false,
+                        isPassword: true,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: AppButtonStyles.secondaryButton.copyWith(
+                         padding: WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: AppSpacing.sm))
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Update Account Security',style: AppTextStyles.headline3.copyWith(color: AppColors.darkText),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -172,7 +207,13 @@ class SettingPage extends StatelessWidget {
   Column _buildFormField({
     String label = '',
     TextEditingController? controller,
+    String placeholder = 'Enter Amount',
+    bool isPassword = false,
+    bool isNumerical = true, 
+    ValueChanged<String>? onChanged,
+    String? Function(String?)? validator,
   }) {
+
     return Column(
       spacing: 9,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,19 +227,29 @@ class SettingPage extends StatelessWidget {
         ),
         TextField(
           controller: controller,
-
-          decoration: AppInputStyles.textInputDecoration(
-            labelText: '',
-            hintText: 'Enter Amount',
-          ),
-          keyboardType: TextInputType.numberWithOptions(),
+          obscureText: isPassword,
+          onChanged: onChanged, 
+          decoration:
+              AppInputStyles.textInputDecoration(
+                hintText: placeholder,
+              ).copyWith(
+                suffixIcon: isPassword
+                    ? Icon(
+                        Icons.visibility_outlined,
+                      ) 
+                    : null,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,labelText:null
+              ),
+          keyboardType: isNumerical
+              ? TextInputType.numberWithOptions(decimal: true) // ✅ explicit
+              : TextInputType.text,
           style: AppTextStyles.headline4,
         ),
         SizedBox(height: 10),
       ],
     );
   }
-
+  
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       backgroundColor: AppColors.background,
@@ -224,21 +275,5 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigation() {
-    return BottomNavigationBar(
-      selectedItemColor: AppColors.primary,
-      currentIndex: 2,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.receipt_long),
-          label: 'Ledger',
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-      ],
-      onTap: (index) {
-        // TODO: Navigate to different sections
-      },
-    );
-  }
+  
 }

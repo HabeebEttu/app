@@ -300,8 +300,8 @@ class AppInputStyles {
   );
 
   static InputDecoration textInputDecoration({
-    String labelText = 'Label',
-    String hintText = 'Enter text',
+    String labelText = '',
+    String hintText = '',
   }) => InputDecoration(
     labelText: labelText,
     hintText: hintText,
@@ -348,10 +348,11 @@ class AppButtonStyles {
 
   // Secondary Button
   static ButtonStyle secondaryButton = ElevatedButton.styleFrom(
-    backgroundColor: AppColors.surface,
+    backgroundColor: AppColors.border,
     foregroundColor: AppColors.darkText,
     elevation: 0,
-    side: const BorderSide(color: AppColors.border),
+
+    // side: const BorderSide(color: AppColors.border),
     padding: const EdgeInsets.symmetric(
       horizontal: AppSpacing.lg,
       vertical: AppSpacing.md,
@@ -472,9 +473,9 @@ class AppCardStyles {
     boxShadow: AppShadows.mediumList,
   );
   static BoxDecoration formCard = BoxDecoration(
-     color: const Color.fromARGB(255, 230, 230, 230),
-     borderRadius:AppBorderRadius.mediumRadius
-       );
+    color: const Color.fromARGB(255, 230, 230, 230),
+    borderRadius: AppBorderRadius.mediumRadius,
+  );
 }
 
 // ============================================================================
@@ -498,8 +499,6 @@ class AppTheme {
         tertiary: AppColors.primaryLighter,
         error: AppColors.error,
         onError: Colors.white,
-        background: AppColors.background,
-        onBackground: AppColors.darkText,
         surface: AppColors.surface,
         onSurface: AppColors.darkText,
       ),
@@ -613,14 +612,14 @@ class AppTheme {
 
       // Switch Theme
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return AppColors.primary;
           }
           return AppColors.hintText;
         }),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return AppColors.primaryLightest;
           }
           return AppColors.border;
@@ -629,8 +628,8 @@ class AppTheme {
 
       // Checkbox Theme
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return AppColors.primary;
           }
           return AppColors.border;
@@ -639,8 +638,8 @@ class AppTheme {
 
       // Radio Theme
       radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return AppColors.primary;
           }
           return AppColors.border;
@@ -678,8 +677,6 @@ class AppTheme {
         onSecondary: AppColors.primary,
         error: AppColors.errorLight,
         onError: AppColors.error,
-        background: Color(0xFF121212),
-        onBackground: Colors.white,
         surface: Color(0xFF1E1E1E),
         onSurface: Colors.white,
       ),

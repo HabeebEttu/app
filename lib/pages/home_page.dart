@@ -1,3 +1,4 @@
+import 'package:app/pages/customer_details_page.dart';
 import 'package:app/pages/setting_page.dart';
 import 'package:app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               _buildCustomerList(),
 
               // Extra spacing at bottom
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: AppSpacing.sm),
             ],
           ),
         ),
@@ -189,7 +190,6 @@ class _HomePageState extends State<HomePage> {
   /// Builds bottom navigation bar
   /// Provides navigation to other sections
   Widget _buildBottomNavigation() {
-   
     return BottomNavigationBar(
       selectedItemColor: AppColors.primary,
       currentIndex: 0,
@@ -201,9 +201,7 @@ class _HomePageState extends State<HomePage> {
         ),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],
-      onTap: (index) {
-        
-      },
+      onTap: (index) {},
     );
   }
 }
@@ -296,27 +294,22 @@ class CustomerCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: AppSpacing.lg,
         children: [
-          // Header row: Customer label and balance status
           _buildCardHeader(statusColor, statusText),
 
-          // Customer name and balance amount
           _buildCustomerInfo(statusColor),
 
-          // Divider
           Divider(
             color: AppColors.border,
             height: 1,
             thickness: AppDimensions.dividerThickness,
           ),
 
-          // Footer: Status badge and action
-          _buildCardFooter(statusIcon, statusColor, statusText),
+          _buildCardFooter(statusIcon, statusColor, statusText,context),
         ],
       ),
     );
   }
 
-  /// Builds the header row with customer label and status label
   Widget _buildCardHeader(Color statusColor, String statusText) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -376,6 +369,7 @@ class CustomerCard extends StatelessWidget {
     IconData statusIcon,
     Color statusColor,
     String statusText,
+    BuildContext context,
   ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -387,7 +381,14 @@ class CustomerCard extends StatelessWidget {
         // Details action button
         TextButton.icon(
           onPressed: () {
-            // TODO: Navigate to customer detail page
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CustomerDetailsPage();
+                },
+              ),
+            );
           },
           icon: const Icon(Icons.arrow_forward, size: 14),
           label: Text(
