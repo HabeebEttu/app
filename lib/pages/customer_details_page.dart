@@ -1,3 +1,4 @@
+import 'package:app/pages/new_activity.dart';
 import 'package:app/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,11 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
           spacing: 5,
           children: [Icon(Icons.add), Text('New Transaction')],
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => NewActivityPage()));
+        },
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -378,134 +383,129 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
       ],
     );
   }
-}
 
-Widget _buildPaymentCard() {
-  return Column(
-    children: [
-      // ── Header ──────────────────────────────────────────────────────────
-      Container(
-        decoration: BoxDecoration(
-          color: AppColors.border,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppBorderRadius.large),
-            topRight: Radius.circular(AppBorderRadius.large),
+  Widget _buildPaymentCard() {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.border,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppBorderRadius.large),
+              topRight: Radius.circular(AppBorderRadius.large),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                spacing: AppSpacing.md,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(AppSpacing.sm),
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Icon(
-                      Icons.payments_outlined,
-                      size: 20,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  Text(
-                    'Payment'.toUpperCase(),
-                    style: AppTextStyles.successText.copyWith(fontSize: 17),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text('Jan 10, 2024', style: AppTextStyles.headline2),
-              Text('03:22 PM', style: AppTextStyles.headline4),
-            ],
-          ),
-        ),
-      ),
-
-      // ── Body ────────────────────────────────────────────────────────────
-      Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(AppBorderRadius.large),
-            bottomRight: Radius.circular(AppBorderRadius.large),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Left: method icon + method label + reference
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   spacing: AppSpacing.md,
                   children: [
                     Container(
                       padding: EdgeInsets.all(AppSpacing.sm),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryLightest,
-                        borderRadius: BorderRadius.circular(
-                          AppBorderRadius.medium,
-                        ),
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(7),
                       ),
                       child: Icon(
-                        Icons.account_balance_outlined,
+                        Icons.payments_outlined,
                         size: 20,
                         color: AppColors.primary,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 4,
-                      children: [
-                        Text(
-                          'METHOD: BANK\nTRANSFER',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.lightText,
-                            height: 1.5,
-                          ),
-                        ),
-                        Text(
-                          'Ref: TRF_9930211X',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.lightText,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Payment'.toUpperCase(),
+                      style: AppTextStyles.successText.copyWith(fontSize: 17),
                     ),
                   ],
                 ),
-              ),
-
-              // Right: amount paid label + value
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: 4,
-                children: [
-                  Text(
-                    'Amount Paid',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.lightText,
-                    ),
-                  ),
-                  Text(
-                    '₦50,000',
-                    style: AppTextStyles.amountLarge.copyWith(
-                      color: AppColors.darkText,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                SizedBox(height: 20),
+                Text('Jan 10, 2024', style: AppTextStyles.headline2),
+                Text('03:22 PM', style: AppTextStyles.headline4),
+              ],
+            ),
           ),
         ),
-      ),
-    ],
-  );
+
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(AppBorderRadius.large),
+              bottomRight: Radius.circular(AppBorderRadius.large),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: AppSpacing.md,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(AppSpacing.sm),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryLightest,
+                          borderRadius: BorderRadius.circular(
+                            AppBorderRadius.medium,
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.account_balance_outlined,
+                          size: 20,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 4,
+                        children: [
+                          Text(
+                            'METHOD: BANK\nTRANSFER',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.lightText,
+                              height: 1.5,
+                            ),
+                          ),
+                          Text(
+                            'Ref: TRF_9930211X',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.lightText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: 4,
+                  children: [
+                    Text(
+                      'Amount Paid',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.lightText,
+                      ),
+                    ),
+                    Text(
+                      '₦50,000',
+                      style: AppTextStyles.amountLarge.copyWith(
+                        color: AppColors.darkText,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
