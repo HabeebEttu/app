@@ -1,5 +1,4 @@
 import 'package:app/pages/customer_details_page.dart';
-import 'package:app/pages/setting_page.dart';
 import 'package:app/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -189,21 +188,21 @@ class _HomePageState extends State<HomePage> {
 
   /// Builds bottom navigation bar
   /// Provides navigation to other sections
-  Widget _buildBottomNavigation() {
-    return BottomNavigationBar(
-      selectedItemColor: AppColors.primary,
-      currentIndex: 0,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.receipt_long),
-          label: 'Ledger',
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-      ],
-      onTap: (index) {},
-    );
-  }
+  // Widget _buildBottomNavigation() {
+  //   return BottomNavigationBar(
+  //     selectedItemColor: AppColors.primary,
+  //     currentIndex: 0,
+  //     items: const [
+  //       BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+  //       BottomNavigationBarItem(
+  //         icon: Icon(Icons.receipt_long),
+  //         label: 'Ledger',
+  //       ),
+  //       BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+  //     ],
+  //     onTap: (index) {},
+  //   );
+  // }
 }
 
 /// Filter Pill Widget
@@ -248,20 +247,6 @@ class FilterPill extends StatelessWidget {
   }
 }
 
-/// Customer Card Widget
-/// Displays customer information with status indicator
-///
-/// IMPROVEMENTS MADE:
-/// 1. Added status parameter for flexible status display
-/// 2. Used theme colors and text styles consistently
-/// 3. Improved layout with better spacing using AppSpacing constants
-/// 4. Fixed color logic - now uses getStatusColor() helper from theme
-/// 5. Added proper dividers instead of SizedBox
-/// 6. Improved typography hierarchy
-/// 7. Added status badge component
-/// 8. Better touch target sizing (min 44x44)
-/// 9. Removed unused isDebit, now uses balance to determine status
-/// 10. Added icon for visual feedback
 class CustomerCard extends StatelessWidget {
   final String customerName;
   final double balance;
@@ -336,7 +321,6 @@ class CustomerCard extends StatelessWidget {
     );
   }
 
-  /// Builds the customer name and balance display
   Widget _buildCustomerInfo(Color statusColor) {
     final isNegative = balance < 0;
     final displayAmount = balance.abs().toStringAsFixed(2);
@@ -355,7 +339,6 @@ class CustomerCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.md),
-        // Balance amount with proper currency formatting
         Text(
           '${isNegative ? '-' : ''}\$$displayAmount',
           style: AppTextStyles.amountLarge.copyWith(color: statusColor),

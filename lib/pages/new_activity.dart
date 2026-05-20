@@ -514,75 +514,75 @@ class _NewActivityPageState extends State<NewActivityPage> {
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        boxShadow: AppShadows.smallList,
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home_outlined, 'Home', false),
-              _buildNavItemActive(Icons.book_outlined, 'Ledger'),
-              _buildNavItem(Icons.settings_outlined, 'Settings', false),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildBottomNav() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       color: AppColors.surface,
+  //       boxShadow: AppShadows.smallList,
+  //     ),
+  //     child: SafeArea(
+  //       child: Padding(
+  //         padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //           children: [
+  //             _buildNavItem(Icons.home_outlined, 'Home', false),
+  //             _buildNavItemActive(Icons.book_outlined, 'Ledger'),
+  //             _buildNavItem(Icons.settings_outlined, 'Settings', false),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildNavItem(IconData icon, String label, bool active) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 4,
-      children: [
-        Icon(
-          icon,
-          color: active ? AppColors.primary : AppColors.lightText,
-          size: AppDimensions.iconMedium,
-        ),
-        Text(
-          label.toUpperCase(),
-          style: AppTextStyles.overline.copyWith(
-            color: active ? AppColors.primary : AppColors.lightText,
-            letterSpacing: 1.0,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildNavItem(IconData icon, String label, bool active) {
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     spacing: 4,
+  //     children: [
+  //       Icon(
+  //         icon,
+  //         color: active ? AppColors.primary : AppColors.lightText,
+  //         size: AppDimensions.iconMedium,
+  //       ),
+  //       Text(
+  //         label.toUpperCase(),
+  //         style: AppTextStyles.overline.copyWith(
+  //           color: active ? AppColors.primary : AppColors.lightText,
+  //           letterSpacing: 1.0,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildNavItemActive(IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 4,
-      children: [
-        Container(
-          padding: EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(AppBorderRadius.medium),
-          ),
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: AppDimensions.iconMedium,
-          ),
-        ),
-        Text(
-          label.toUpperCase(),
-          style: AppTextStyles.overline.copyWith(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1.0,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildNavItemActive(IconData icon, String label) {
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     spacing: 4,
+  //     children: [
+  //       Container(
+  //         padding: EdgeInsets.all(AppSpacing.md),
+  //         decoration: BoxDecoration(
+  //           color: AppColors.primary,
+  //           borderRadius: BorderRadius.circular(AppBorderRadius.medium),
+  //         ),
+  //         child: Icon(
+  //           icon,
+  //           color: Colors.white,
+  //           size: AppDimensions.iconMedium,
+  //         ),
+  //       ),
+  //       Text(
+  //         label.toUpperCase(),
+  //         style: AppTextStyles.overline.copyWith(
+  //           color: AppColors.primary,
+  //           fontWeight: FontWeight.w600,
+  //           letterSpacing: 1.0,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
