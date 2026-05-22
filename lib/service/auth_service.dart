@@ -21,6 +21,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    
     return await _client.auth.signInWithPassword(
       email: email,
       password: password,

@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'package:app/service/auth_service.dart';
+import 'package:app/service/user_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/auth_state_model.dart';
 
 class AuthNotifier extends StateNotifier<AuthStateModel> {
   final AuthService _authService;
+  final UserService _userService;
   StreamSubscription<AuthState>? _authSubscription;
 
-  AuthNotifier(this._authService) : super(const AuthStateModel.initial());
+  AuthNotifier(this._authService, this._userService)
+    : super(const AuthStateModel.initial());
 
   /// Call once at startup. Handles persisted sessions (app restart)
   /// and listens to all future auth events from Supabase.
@@ -50,21 +53,27 @@ class AuthNotifier extends StateNotifier<AuthStateModel> {
     }
   }
 
-  Future<void> signUp({required String email, required String password}) async {
+  Future<void> signUp({
+    String? username,
+    required String email,
+    required String password,
+  }) async {
     state = const AuthStateModel.loading();
     try {
       final response = await _authService.signUp(
         email: email,
         password: password,
       );
-      // If email confirmation is disabled in Supabase,
-      // user is returned immediately. Otherwise it's null until confirmed.
       if (response.user != null) {
         state = AuthStateModel.authenticated(response.user!);
       } else {
-        // Email confirmation pending — send user to check their inbox
         state = const AuthStateModel.unauthenticated();
       }
+      final res = _userService.createUser(
+        email: email,
+        userId: response.user!.id,
+        username: username ?? '',
+      );
     } on AuthException catch (e) {
       state = AuthStateModel.error(e.message);
     } catch (e) {

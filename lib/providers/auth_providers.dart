@@ -1,6 +1,7 @@
 import 'package:app/models/auth_state_model.dart';
 import 'package:app/notifiers/auth_notifier.dart';
 import 'package:app/service/auth_service.dart';
+import 'package:app/service/user_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,9 +14,15 @@ final authRepositoryProvider = Provider<AuthService>((ref) {
   return AuthService(client);
 });
 
-final authProvider = StateNotifierProvider<AuthNotifier,AuthStateModel>((ref) {
+final userServiceProvider = Provider<UserService>((ref) {
+  final client = ref.watch(supabaseClientProvider);
+  return UserService(client);
+});
+
+final authProvider = StateNotifierProvider<AuthNotifier, AuthStateModel>((ref) {
   final authService = ref.watch(authRepositoryProvider);
-  return AuthNotifier(authService)..initialize();
+  final userService = ref.watch(userServiceProvider);
+  return AuthNotifier(authService,userService)..initialize();
 });
 
 final currentUserProvider = Provider<User?>((ref) {

@@ -103,9 +103,9 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             // TODO: Implement search functionality
           },
-          icon: const Icon(Icons.search),
+          icon: const Icon(Icons.settings),
           color: AppColors.primary,
-          padding: const EdgeInsets.only(right: AppSpacing.lg),
+          padding: const EdgeInsets.all(AppSpacing.lg),
         ),
       ],
     );
