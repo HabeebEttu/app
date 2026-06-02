@@ -1,16 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:app/models/customers.dart';
-import 'package:app/models/setting.dart';
+import 'package:app/models/customer.dart';
+import 'package:app/models/settings.dart';
 
 class User {
   String id;
   String fireStoreId;
   String name;
   String email;
-  Setting settings;
-  Customers customers;
+  Settings settings;
+  Customer customers;
   User({
     required this.id,
     required this.fireStoreId,
@@ -25,8 +25,8 @@ class User {
     String? fireStoreId,
     String? name,
     String? email,
-    Setting? settings,
-    Customers? customers,
+    Settings? settings,
+    Customer? customers,
   }) {
     return User(
       id: id ?? this.id,
@@ -55,14 +55,15 @@ class User {
       fireStoreId: map['fireStoreId'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      settings: Setting.fromMap(map['settings'] as Map<String,dynamic>),
-      customers: Customers.fromMap(map['customers'] as Map<String,dynamic>),
+      settings: Settings.fromMap(map['settings'] as Map<String, dynamic>),
+      customers: Customer.fromMap(map['customers'] as Map<String, dynamic>),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -72,23 +73,22 @@ class User {
   @override
   bool operator ==(covariant User other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.fireStoreId == fireStoreId &&
-      other.name == name &&
-      other.email == email &&
-      other.settings == settings &&
-      other.customers == customers;
+
+    return other.id == id &&
+        other.fireStoreId == fireStoreId &&
+        other.name == name &&
+        other.email == email &&
+        other.settings == settings &&
+        other.customers == customers;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      fireStoreId.hashCode ^
-      name.hashCode ^
-      email.hashCode ^
-      settings.hashCode ^
-      customers.hashCode;
+        fireStoreId.hashCode ^
+        name.hashCode ^
+        email.hashCode ^
+        settings.hashCode ^
+        customers.hashCode;
   }
 }

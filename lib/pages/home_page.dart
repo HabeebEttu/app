@@ -1,6 +1,7 @@
 import 'package:app/pages/customer_details_page.dart';
 import 'package:app/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,7 +45,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.background,
       appBar: _buildAppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.push('/customer/new');
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(15),
         ),
@@ -99,13 +102,16 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () {
-            // TODO: Implement search functionality
-          },
-          icon: const Icon(Icons.settings),
-          color: AppColors.primary,
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: IconButton(
+            onPressed: () {
+              context.push('/settings');
+            },
+            icon: const Icon(Icons.settings),
+            color: AppColors.primary,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+          ),
         ),
       ],
     );
@@ -289,7 +295,7 @@ class CustomerCard extends StatelessWidget {
             thickness: AppDimensions.dividerThickness,
           ),
 
-          _buildCardFooter(statusIcon, statusColor, statusText,context),
+          _buildCardFooter(statusIcon, statusColor, statusText, context),
         ],
       ),
     );

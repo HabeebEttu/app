@@ -1,6 +1,8 @@
 import 'package:app/models/auth_state_model.dart';
+import 'package:app/pages/add_customer_page.dart';
 import 'package:app/pages/home_page.dart';
 import 'package:app/pages/login_screen.dart';
+import 'package:app/pages/setting_page.dart';
 import 'package:app/pages/signup_screen.dart';
 import 'package:app/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +51,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
       GoRoute(path: '/signup', builder: (_, __) => const SignupScreen()),
       GoRoute(path: '/home', builder: (_, __) => const HomePage()),
+      GoRoute(path: '/settings', builder: (_,__) => const SettingPage()),
+      GoRoute(path: '/customer/new',builder: (_,__)=> const AddCustomerPage())
     ],
   );
 });

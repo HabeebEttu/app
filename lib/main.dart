@@ -13,7 +13,7 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANNON_KEY']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
   runApp(ProviderScope(child: const MyApp()));
 }

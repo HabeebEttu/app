@@ -5,7 +5,7 @@ class UserService {
   UserService(this._client);
   User? get currentUser => _client.auth.currentUser;
 
-  Future<User> createUser({
+  Future<void> createUser({
     String username = '',
     required String email,
     String? userId,
@@ -15,6 +15,6 @@ class UserService {
         .insert({'userId': userId, 'username': username, 'email': email})
         .select()
         .single();
-    return User.fromJson(response)!;
+    
   }
 }

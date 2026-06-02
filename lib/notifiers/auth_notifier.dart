@@ -69,7 +69,7 @@ class AuthNotifier extends StateNotifier<AuthStateModel> {
       } else {
         state = const AuthStateModel.unauthenticated();
       }
-      final res = _userService.createUser(
+      final res = await _userService.createUser(
         email: email,
         userId: response.user!.id,
         username: username ?? '',
