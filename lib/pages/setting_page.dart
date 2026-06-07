@@ -211,7 +211,6 @@ class SettingPage extends StatelessWidget {
     bool isPassword = false,
     bool isNumerical = true, 
     ValueChanged<String>? onChanged,
-    String? Function(String?)? validator,
   }) {
 
     return Column(

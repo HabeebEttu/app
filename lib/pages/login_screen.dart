@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +43,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // like navigation and snackbars. Never use ref.watch for navigation.
     ref.listen<AuthStateModel>(authProvider, (previous, next) {
       if (next.status == AuthStatus.authenticated) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Login successful! Welcome back.'),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 2),
+          ),
+        );
         context.push('/home');
       }
       if (next.hasError && next.errorMessage != null) {
